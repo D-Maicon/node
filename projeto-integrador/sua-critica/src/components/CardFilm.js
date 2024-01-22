@@ -1,0 +1,45 @@
+import { Card, CardBody, CardTitle, CardText, Tooltip} from 'reactstrap'
+import {useState, useId} from 'react';
+
+
+
+function CardFilm({img, titulo, descricao}){
+
+    const [tooltipOpen, setTooltipOpen] = useState(false);
+    const toggle = () => setTooltipOpen(!tooltipOpen);
+    const idUnico = useId().replaceAll(/:/g, "");
+
+    return(
+    <div>
+        <Card
+            className='card text-bg-dark mb-3 text-white mb-4 mx-auto'
+
+            style={{
+                width: '18rem',
+                minHeight: '425px'
+            }}
+        >
+            <img
+                alt={titulo}
+                src={img}
+            />
+            <CardBody>
+                <CardTitle tag="h5">
+                    {titulo}
+                </CardTitle>
+                <CardText id={idUnico}>
+                    {descricao.substring(0, 70)}{descricao.length >= 70 && '...'}
+                    <Tooltip
+                        isOpen={tooltipOpen}
+                        target={idUnico}
+                        toggle={toggle}>
+                        {descricao}
+                    </Tooltip>
+                </CardText>
+            </CardBody>
+        </Card>
+    </div>
+    )
+}
+
+export default CardFilm;
